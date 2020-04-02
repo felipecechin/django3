@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'curso.core',
     'curso.courses',
+    'curso.accounts'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,7 @@ EMAIL_HOST_USER = '@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 
 CONTACT_EMAIL = 'ficechin@hotmail.com'
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_URL = 'accounts:logout'
