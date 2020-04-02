@@ -9,4 +9,5 @@ urlpatterns = [
     path('cadastre-se/', register, name='register'),
     path('sair/', auth_views.LogoutView.as_view(next_page='core:home'), name='logout'),
     path('editar/', edit, name='edit'),
+    path('editar-senha/', edit_password, name='edit_password')
 ]
