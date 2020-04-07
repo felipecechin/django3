@@ -2,16 +2,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from .forms import RegisterForm, EditAccountForm, PasswordResetForm
 from .models import PasswordReset
+from curso.courses.models import Enrollment
 
 User = get_user_model()
 
 @login_required
 def dashboard(request):
     template_name = 'accounts/dashboard.html'
-    return render(request, template_name)
+    context = {}
+    return render(request, template_name, context)
 
 @login_required
 def edit(request):
@@ -21,8 +24,8 @@ def edit(request):
         form = EditAccountForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            form = EditAccountForm(instance=request.user)
-            context['success'] = True
+            messages.success(request, 'Os dados da conta foram alterados')
+            return redirect('accounts:dashboard')
     else:
         form = EditAccountForm(instance=request.user)
     context['form'] = form
