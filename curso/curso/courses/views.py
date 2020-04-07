@@ -30,6 +30,7 @@ def details(request, slug):
     template_name = 'courses/details.html'
     return render(request, template_name, context)
 
+
 @login_required
 def enrollment(request, slug):
     course = get_object_or_404(Course, slug=slug)
@@ -41,3 +42,18 @@ def enrollment(request, slug):
 
     # enrollment.active()
     return redirect('accounts:dashboard')
+
+
+@login_required
+def announcements(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+    if not request.user.is_staff:
+        enrollment = get_object_or_404(Enrollment, user=request.user, course=course)
+        if not enrollment.is_approved():
+            messages.error(request, 'A sua inscrição está pendente')
+            return redirect('accounts:dashboard')
+    template = 'courses/announcements.html'
+    context = {
+        'course' : course
+    }
+    return render(request, template, context)
