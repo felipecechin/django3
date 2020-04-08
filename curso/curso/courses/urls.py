@@ -7,5 +7,6 @@ urlpatterns = [
     path('<slug:slug>/', details, name='details'),
     path('<slug:slug>/inscricao', enrollment, name='enrollment'),
     path('<slug:slug>/anuncios', announcements, name='announcements'),
+    path('<slug:slug>/cancelar-inscricao', undo_enrollment, name='undo_enrollment'),
 ]
 
