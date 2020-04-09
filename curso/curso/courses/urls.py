@@ -9,5 +9,7 @@ urlpatterns = [
     path('<slug:slug>/anuncios', announcements, name='announcements'),
     path('<slug:slug>/anuncios/<int:pk>/', show_announcement, name='show_announcement'),
     path('<slug:slug>/cancelar-inscricao', undo_enrollment, name='undo_enrollment'),
+    path('<slug:slug>/aulas', lessons, name='lessons'),
+    path('<slug:slug>/aulas/<int:pk>/', lesson, name='lesson'),
+    path('<slug:slug>/materiais/<int:pk>/', material, name='material'),
 ]
-

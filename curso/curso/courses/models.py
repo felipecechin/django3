@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from curso.core.mail import send_mail_template
-
+from django.utils import timezone
 
 class CourseManager(models.Manager):
     def search(self, query):
@@ -30,6 +30,10 @@ class Course(models.Model):
 
     objects = CourseManager()
 
+    def release_lessons(self):
+        today = timezone.now().date()
+        return self.lessons.filter(release_date__gte=today)
+
     def __str__(self):
         return self.name
 
@@ -57,6 +61,12 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.name
+
+    def is_available(self):
+        if self.release_date:
+            today = timezone.now().date()
+            return self.release_date >= today
+        return False
 
     class Meta:
         verbose_name = 'Aula'
