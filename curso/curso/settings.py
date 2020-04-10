@@ -35,11 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #apps
+    # apps
     'curso.core',
     'curso.courses',
     'curso.accounts',
-    #libs
+    'curso.forum',
+    # libs
     'taggit'
 ]
 
