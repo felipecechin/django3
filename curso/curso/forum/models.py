@@ -5,6 +5,7 @@ from taggit.managers import TaggableManager
 
 class Thread(models.Model):
     title = models.CharField('Título', max_length=100)
+    slug = models.SlugField('Identificador', max_length=100, unique=True)
     body = models.TextField('Mensagem')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Autor', related_name='threads',
                                on_delete=models.CASCADE)
