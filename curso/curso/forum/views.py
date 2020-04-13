@@ -1,7 +1,9 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, View, ListView, DetailView
 from .models import Thread, Reply
 from .forms import ReplyForm
+from django.http import HttpResponse
 from django.contrib import messages
 
 
@@ -72,11 +74,16 @@ class ReplyCorrectView(View):
     correct = True
 
     def get(self, request, pk):
-        reply = get_object_or_404(Reply, pk=pk, author=request.user)
+        reply = get_object_or_404(Reply, pk=pk, thread__author=request.user)
         reply.correct = self.correct
         reply.save()
-        messages.success(request, 'Resposta atualizada com sucesso')
-        return redirect('forum:thread', slug=reply.thread.slug)
+        message = 'Resposta atualizada com sucesso'
+        if request.is_ajax():
+            data = {'success': True, 'message': message}
+            return HttpResponse(json.dumps(data), content_type='application/json')
+        else:
+            messages.success(request, 'Resposta atualizada com sucesso')
+            return redirect('forum:thread', slug=reply.thread.slug)
 
 
 index = ForumView.as_view()
