@@ -38,6 +38,7 @@ class Course(models.Model):
         return self.name
 
     class Meta:
+        app_label = 'courses'
         verbose_name = 'Curso'
         verbose_name_plural = 'Cursos'
         ordering = ['name']
